@@ -6,7 +6,9 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum CommonResponseCode {
-    OK (200, "성공");
+    OK (200, "성공")
+    , NOT_FOUND(404, "경로를 찾을 수 없습니다")
+    , INTERNAL_SERVER_ERROR(500, "서버 오류입니다");
 
     private final Integer code;
     private final String message;
