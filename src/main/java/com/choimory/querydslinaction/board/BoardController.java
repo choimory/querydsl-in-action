@@ -19,14 +19,14 @@ public class BoardController {
     private final BoardService boardService;
 
     @GetMapping
-    public ResponseEntity<CommonResponseData> getBoards(final BoardRequestDto param, Pageable pageable){
+    public ResponseEntity<CommonResponseData<?>> getBoards(final BoardRequestDto param, Pageable pageable){
         return new ResponseEntity<>(CommonResponseData.builder()
                                                         .data(boardService.getBoards(param, pageable))
                                                         .build(), HttpStatus.OK);
     }
 
     @GetMapping("/{idx}")
-    public ResponseEntity<CommonResponseData> getBoard(@PathVariable Long idx){
+    public ResponseEntity<CommonResponseData<?>> getBoard(@PathVariable Long idx){
         return new ResponseEntity<>(CommonResponseData.builder()
                                                         .data(boardService.getBoard(BoardRequestDto.builder()
                                                                                                     .idx(idx)

@@ -2,6 +2,7 @@ package com.choimory.querydslinaction.board.service;
 
 import com.choimory.querydslinaction.board.dto.request.BoardRequestDto;
 import com.choimory.querydslinaction.board.dto.response.BoardResponseDto;
+import com.choimory.querydslinaction.board.mapper.BoardMapper;
 import com.choimory.querydslinaction.board.repository.BoardRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class BoardServiceImpl implements BoardService{
     private final BoardRepository boardRepository;
+    private final BoardMapper boardMapper;
 
     @Override
     public Page<BoardResponseDto> getBoards(BoardRequestDto param, Pageable pageable) {

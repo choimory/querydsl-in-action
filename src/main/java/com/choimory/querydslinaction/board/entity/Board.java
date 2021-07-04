@@ -32,6 +32,6 @@ public class Board extends CommonEntity {
     private Long upVote;
     @Column(nullable = false, columnDefinition = "BIGINT default (0)")
     private Long downVote;
-    @OneToMany(mappedBy = "board")
-    private List<BoardComment> boardCooment;
+    @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)
+    private List<BoardComment> boardComments;
 }

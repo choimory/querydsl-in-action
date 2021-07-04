@@ -19,5 +19,5 @@ public class BoardResponseDto {
     private UserResponseDto user;
     private Long upVote;
     private Long downVote;
-    private List<BoardCommentResponseDto> boardCooment;
+    private List<BoardCommentResponseDto> boardComments;
 }
