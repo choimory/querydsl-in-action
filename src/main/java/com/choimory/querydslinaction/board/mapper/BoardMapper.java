@@ -13,5 +13,4 @@ import java.util.List;
 public interface BoardMapper {
     BoardResponseDto toDto (Board entity);
     List<BoardResponseDto> toDtos (List<Board> entities);
-    Page<BoardResponseDto> toDtos (Page<Board> entities);
 }

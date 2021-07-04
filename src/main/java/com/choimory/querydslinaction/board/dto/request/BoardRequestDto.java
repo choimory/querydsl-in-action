@@ -4,6 +4,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 @Builder
 @Getter
 @RequiredArgsConstructor
@@ -12,4 +14,7 @@ public class BoardRequestDto {
     private final String title;
     private final String content;
     private final String nickname;
+    private final List<String> category;
+    private final String viewFrom;
+    private final String viewTo;
 }
