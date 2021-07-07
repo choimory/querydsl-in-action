@@ -27,7 +27,8 @@ public class CustomBoardRepositoryImpl implements CustomBoardRepository{
                         , BoardBooleanExpressions.containContent(param.getContent())
                         , BoardBooleanExpressions.orCategories(param.getCategory())
                         , BoardBooleanExpressions.eqNickname(param.getNickname())
-                        , BoardBooleanExpressions.betweenView(param.getViewFrom(), param.getViewTo()))
+                        , BoardBooleanExpressions.betweenView(param.getViewFrom(), param.getViewTo())
+                        , BoardBooleanExpressions.betweenRegistedDateTime(param.getRegistDateTimeFrom(), param.getRegistDateTimeTo()))
                 .fetchResults();
 
         return new PageImpl<>(result.getResults(), pageable, result.getTotal());

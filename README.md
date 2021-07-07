@@ -14,9 +14,10 @@
 
 - JPA Auditing
 - BooleanExpression
+    - %LIKE%, LIKE%  
     - IN
-    - OR
-    - VARCHAR BETWEEN
+    - Loop OR
+    - Varchar BETWEEN
     - LocalDateTime BETWEEN
     
 - Projections

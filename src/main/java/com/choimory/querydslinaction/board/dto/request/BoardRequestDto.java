@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Builder
@@ -17,4 +18,6 @@ public class BoardRequestDto {
     private final List<String> category;
     private final String viewFrom;
     private final String viewTo;
+    private final LocalDateTime registDateTimeFrom;
+    private final LocalDateTime registDateTimeTo;
 }
