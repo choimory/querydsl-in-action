@@ -20,7 +20,7 @@
     - Varchar BETWEEN
     - LocalDateTime BETWEEN
 - Tuple
-- Projections Fields, Bean
+- Projections Fields
 - QueryResults<T>
 - JPAQuery<T>
 - JPAExpressions (Subquery)

@@ -11,5 +11,4 @@ public interface CustomBoardRepository {
     Page<Board> getOptionalColumnWithTuple(BoardRequestDto param, Pageable pageable);
     Page<Board> getOptionalColumnWithProjectionFields(BoardRequestDto param, Pageable pageable);
     Page<Board> dynamicTotalCountWithJPAQuery(BoardRequestDto param, Pageable pageable);
-    Page<Board> joinWithTuple(BoardRequestDto param, Pageable pageable);
 }

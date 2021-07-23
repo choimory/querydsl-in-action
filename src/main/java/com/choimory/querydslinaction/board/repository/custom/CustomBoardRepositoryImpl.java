@@ -87,9 +87,4 @@ public class CustomBoardRepositoryImpl implements CustomBoardRepository{
 
         return new PageImpl<>(result, pageable, count);
     }
-
-    @Override
-    public Page<Board> joinWithTuple(BoardRequestDto param, Pageable pageable) {
-        return null;
-    }
 }
