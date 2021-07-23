@@ -8,8 +8,9 @@ import org.springframework.data.domain.Pageable;
 
 public interface CustomBoardRepository {
     Page<Board> getBoardsDynamically(BoardRequestDto param, Pageable pageable);
-    Page<Board> getBoardsOptionalColumnByTuple(BoardRequestDto param, Pageable pageable);
-    Page<Board> getBoardsOptionalColumnByProjectionsFields(BoardRequestDto param, Pageable pageable);
-    Page<BoardResponseDto> getBoardsOptionalColumnByProjectionsBean(BoardRequestDto param, Pageable pageable);
-    Page<Board> getBoardsWithDynamicTotalCount(BoardRequestDto param, Pageable pageable);
+    Page<Board> getOptionalColumnWithTuple(BoardRequestDto param, Pageable pageable);
+    Page<Board> getOptionalColumnWithProjectionFields(BoardRequestDto param, Pageable pageable);
+    Page<BoardResponseDto> getOptionalColumnWithProjectionBean(BoardRequestDto param, Pageable pageable);
+    Page<Board> dynamicTotalCountWithJPAQuery(BoardRequestDto param, Pageable pageable);
+    Page<Board> joinWithTuple(BoardRequestDto param, Pageable pageable);
 }

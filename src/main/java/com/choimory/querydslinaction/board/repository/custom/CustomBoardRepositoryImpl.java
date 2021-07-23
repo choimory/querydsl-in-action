@@ -42,7 +42,7 @@ public class CustomBoardRepositoryImpl implements CustomBoardRepository{
     }
 
     @Override
-    public Page<Board> getBoardsOptionalColumnByTuple(BoardRequestDto param, Pageable pageable) {
+    public Page<Board> getOptionalColumnWithTuple(BoardRequestDto param, Pageable pageable) {
         List<Board> result = new ArrayList<>();
         List<Tuple> tuples = query.select(board.title
                 , board.user)
@@ -63,7 +63,7 @@ public class CustomBoardRepositoryImpl implements CustomBoardRepository{
     }
 
     @Override
-    public Page<Board> getBoardsOptionalColumnByProjectionsFields(BoardRequestDto param, Pageable pageable) {
+    public Page<Board> getOptionalColumnWithProjectionFields(BoardRequestDto param, Pageable pageable) {
         QueryResults<Board> result = query.select(Projections.fields(Board.class
                 , board.title
                 , board.user))
@@ -76,7 +76,7 @@ public class CustomBoardRepositoryImpl implements CustomBoardRepository{
     }
 
     @Override
-    public Page<BoardResponseDto> getBoardsOptionalColumnByProjectionsBean(BoardRequestDto param, Pageable pageable) {
+    public Page<BoardResponseDto> getOptionalColumnWithProjectionBean(BoardRequestDto param, Pageable pageable) {
         QueryResults<BoardResponseDto> result = query.select(Projections.bean(BoardResponseDto.class
                 , board.title
                 , board.user))
@@ -89,7 +89,7 @@ public class CustomBoardRepositoryImpl implements CustomBoardRepository{
     }
 
     @Override
-    public Page<Board> getBoardsWithDynamicTotalCount(BoardRequestDto param, Pageable pageable) {
+    public Page<Board> dynamicTotalCountWithJPAQuery(BoardRequestDto param, Pageable pageable) {
         JPAQuery<Board> buildedQuery = query.select(board)
                 .from(board)
                 .offset(pageable.getOffset())
@@ -99,5 +99,10 @@ public class CustomBoardRepositoryImpl implements CustomBoardRepository{
         long count = param.getCachedTotalCount() == null ? buildedQuery.fetchCount() : param.getCachedTotalCount();
 
         return new PageImpl<>(result, pageable, count);
+    }
+
+    @Override
+    public Page<Board> joinWithTuple(BoardRequestDto param, Pageable pageable) {
+        return null;
     }
 }
