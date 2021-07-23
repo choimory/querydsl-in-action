@@ -5,6 +5,8 @@ import com.choimory.querydslinaction.board.dto.response.BoardResponseDto;
 import com.choimory.querydslinaction.board.entity.Board;
 import com.choimory.querydslinaction.board.mapper.BoardMapper;
 import com.choimory.querydslinaction.board.repository.BoardRepository;
+import com.choimory.querydslinaction.common.exception.util.CustomException;
+import com.choimory.querydslinaction.common.response.code.CommonResponseCode;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -28,6 +30,7 @@ public class BoardServiceImpl implements BoardService{
 
     @Override
     public BoardResponseDto getBoard(BoardRequestDto param) {
-        return null;
+        return boardMapper.toDto(boardRepository.findById(param.getIdx())
+                .orElseThrow(() -> new CustomException(CommonResponseCode.INTERNAL_SERVER_ERROR.getCode(), CommonResponseCode.INTERNAL_SERVER_ERROR.getMessage())));
     }
 }
