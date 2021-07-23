@@ -1,10 +1,12 @@
 package com.choimory.querydslinaction.board.repository.custom;
 
 import com.choimory.querydslinaction.board.dto.request.BoardRequestDto;
+import com.choimory.querydslinaction.board.dto.response.BoardResponseDto;
 import com.choimory.querydslinaction.board.entity.Board;
 import com.choimory.querydslinaction.board.repository.custom.expressions.BoardBooleanExpressions;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.Tuple;
+import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.AllArgsConstructor;
@@ -50,7 +52,7 @@ public class CustomBoardRepositoryImpl implements CustomBoardRepository{
                 .offset(pageable.getOffset())
                 .fetch();
 
-        tuples.stream().forEach(tuple -> {
+        tuples.forEach(tuple -> {
             result.add(Board.builder()
                     .title(tuple.get(board.title))
                     .user(tuple.get(board.user))
@@ -61,7 +63,28 @@ public class CustomBoardRepositoryImpl implements CustomBoardRepository{
     }
 
     @Override
-    public Page<Board> getBoardsOptionalColumnByProjection(BoardRequestDto param, Pageable pageable) {
-        return null;
+    public Page<Board> getBoardsOptionalColumnByProjectionsFields(BoardRequestDto param, Pageable pageable) {
+        QueryResults<Board> result = query.select(Projections.fields(Board.class
+                , board.title
+                , board.user))
+                .from(board)
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetchResults();
+
+        return new PageImpl<>(result.getResults(), pageable, result.getTotal());
+    }
+
+    @Override
+    public Page<BoardResponseDto> getBoardsOptionalColumnByProjectionsBean(BoardRequestDto param, Pageable pageable) {
+        QueryResults<BoardResponseDto> result = query.select(Projections.bean(BoardResponseDto.class
+                , board.title
+                , board.user))
+                .from(board)
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetchResults();
+
+        return new PageImpl<>(result.getResults(), pageable, result.getTotal());
     }
 }
