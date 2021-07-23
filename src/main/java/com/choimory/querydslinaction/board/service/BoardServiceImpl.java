@@ -33,4 +33,10 @@ public class BoardServiceImpl implements BoardService{
         return boardMapper.toDto(boardRepository.findById(param.getIdx())
                 .orElseThrow(() -> new CustomException(CommonResponseCode.INTERNAL_SERVER_ERROR.getCode(), CommonResponseCode.INTERNAL_SERVER_ERROR.getMessage())));
     }
+
+    @Override
+    public Page<BoardResponseDto> getBoardTuple(BoardRequestDto param, Pageable pageable) {
+        Page<Board> boards = boardRepository.getOptionalColumnWithTuple(param, pageable);
+        return new PageImpl<>(boardMapper.toDtos(boards.getContent()), pageable, boards.getTotalElements());
+    }
 }

@@ -33,4 +33,11 @@ public class BoardController {
                                                                                                     .build()))
                                                         .build(), HttpStatus.OK);
     }
+
+    @GetMapping("/tuple")
+    public ResponseEntity<CommonResponseData<?>> getBoardsTuple(final BoardRequestDto param, final Pageable pageable){
+        return ResponseEntity.ok(CommonResponseData.builder()
+                .data(boardService.getBoardTuple(param, pageable))
+                .build());
+    }
 }
