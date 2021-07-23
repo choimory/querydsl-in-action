@@ -49,11 +49,13 @@ public class BoardBooleanExpressions {
     public static BooleanExpression orCategories(List<String> categories){
         BooleanExpression booleanExpression = null;
 
-        for(String category : categories){
-            if(booleanExpression == null){
-                booleanExpression = board.category.eq(category);
-            } else {
-                booleanExpression = booleanExpression.or(board.category.eq(category));
+        if(categories != null) {
+            for (String category : categories) {
+                if (booleanExpression == null) {
+                    booleanExpression = board.category.eq(category);
+                } else {
+                    booleanExpression = booleanExpression.or(board.category.eq(category));
+                }
             }
         }
 
