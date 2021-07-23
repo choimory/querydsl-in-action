@@ -10,4 +10,5 @@ public interface BoardService {
     BoardResponseDto getBoard(BoardRequestDto param);
     Page<BoardResponseDto> getBoardTuple(BoardRequestDto param, Pageable pageable);
     Page<BoardResponseDto> getBoardFields(BoardRequestDto param, Pageable pageable);
+    Page<BoardResponseDto> getBoardsWithDynamicTotalCount(BoardRequestDto param, Pageable pageable);
 }

@@ -47,4 +47,11 @@ public class BoardController {
                 .data(boardService.getBoardFields(param, pageable))
                 .build());
     }
+
+    @GetMapping("/dynamicCount")
+    public ResponseEntity<CommonResponseData<?>> getBoardsWithDynamicTotalCount(final BoardRequestDto param, final Pageable pageable){
+        return ResponseEntity.ok(CommonResponseData.builder()
+                .data(boardService.getBoardsWithDynamicTotalCount(param, pageable))
+                .build());
+    }
 }
