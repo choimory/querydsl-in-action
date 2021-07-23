@@ -39,4 +39,10 @@ public class BoardServiceImpl implements BoardService{
         Page<Board> boards = boardRepository.getOptionalColumnWithTuple(param, pageable);
         return new PageImpl<>(boardMapper.toDtos(boards.getContent()), pageable, boards.getTotalElements());
     }
+
+    @Override
+    public Page<BoardResponseDto> getBoardFields(BoardRequestDto param, Pageable pageable) {
+        Page<Board> boards = boardRepository.getOptionalColumnWithProjectionFields(param, pageable);
+        return new PageImpl<>(boardMapper.toDtos(boards.getContent()), pageable, boards.getTotalElements());
+    }
 }

@@ -76,19 +76,6 @@ public class CustomBoardRepositoryImpl implements CustomBoardRepository{
     }
 
     @Override
-    public Page<BoardResponseDto> getOptionalColumnWithProjectionBean(BoardRequestDto param, Pageable pageable) {
-        QueryResults<BoardResponseDto> result = query.select(Projections.bean(BoardResponseDto.class
-                , board.title
-                , board.user))
-                .from(board)
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
-                .fetchResults();
-
-        return new PageImpl<>(result.getResults(), pageable, result.getTotal());
-    }
-
-    @Override
     public Page<Board> dynamicTotalCountWithJPAQuery(BoardRequestDto param, Pageable pageable) {
         JPAQuery<Board> buildedQuery = query.select(board)
                 .from(board)

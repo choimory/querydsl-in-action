@@ -40,4 +40,11 @@ public class BoardController {
                 .data(boardService.getBoardTuple(param, pageable))
                 .build());
     }
+
+    @GetMapping("/projections")
+    public ResponseEntity<CommonResponseData<?>> getBoardsProjectionFields(final BoardRequestDto param, final Pageable pageable){
+        return ResponseEntity.ok(CommonResponseData.builder()
+                .data(boardService.getBoardFields(param, pageable))
+                .build());
+    }
 }
