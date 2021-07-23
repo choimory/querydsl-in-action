@@ -1,0 +1,3 @@
+INSERT INTO USER(registed_Date_Time, id, nickname, password, email, address, introduce, point) VALUES ('2020-01-01', 'abc', 'abc', 'abc', 'abc', 'abc', 'abc', 0), ('2020-01-01', 'def', 'def', 'def', 'def', 'def', 'def', 1);
+
+INSERT INTO BOARD(registed_Date_Time, category, title, content, user_idx, view, up_Vote, down_Vote) VALUES ('2020-01-01', '게임', '제목1', '내용1', 1, '0', 1, 0), ('2020-01-01', '유머', '제목2', '내용2', 2, '1', 0, 1);

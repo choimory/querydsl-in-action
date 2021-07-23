@@ -14,9 +14,15 @@
 
 - JPA Auditing
 - BooleanExpression
-- Projections
+    - %LIKE%, LIKE%  
+    - IN
+    - Loop OR
+    - Varchar BETWEEN
+    - LocalDateTime BETWEEN
 - Tuple
-- JPAQuery<T>
+- Projections Fields, Bean
 - QueryResults<T>
+- JPAQuery<T>
+- JPAExpressions (Subquery)
 - fetchJoin()
 - CASCADE & CUD
