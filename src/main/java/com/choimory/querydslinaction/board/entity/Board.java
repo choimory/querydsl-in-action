@@ -28,7 +28,7 @@ public class Board extends CommonEntity {
     @OneToOne
     @JoinColumn(name = "USER_IDX")
     private User user;
-    @Column(nullable = false, columnDefinition = "BIGINT default ('0')")
+    @Column(nullable = false, columnDefinition = "VARCHAR default ('0')")
     private String view; // Varchar 타입의 숫자 범위검색 방법을 학습하기 위해 일부러 String으로 정의
     @Column(nullable = false, columnDefinition = "BIGINT default (0)")
     private Long upVote;
