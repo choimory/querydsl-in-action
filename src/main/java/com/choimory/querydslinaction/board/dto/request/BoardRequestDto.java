@@ -20,4 +20,5 @@ public class BoardRequestDto {
     private final String viewTo;
     private final LocalDateTime registDateTimeFrom;
     private final LocalDateTime registDateTimeTo;
+    private final Long cachedTotalCount;
 }

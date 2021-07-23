@@ -20,9 +20,9 @@
     - Varchar BETWEEN
     - LocalDateTime BETWEEN
 - Tuple
-- Projections
-- JPAQuery<T>
+- Projections Fields, Bean
 - QueryResults<T>
+- JPAQuery<T>
 - JPAExpressions (Subquery)
 - fetchJoin()
 - CASCADE & CUD

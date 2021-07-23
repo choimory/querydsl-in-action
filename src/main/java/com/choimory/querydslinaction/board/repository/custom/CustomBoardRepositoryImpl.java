@@ -87,4 +87,17 @@ public class CustomBoardRepositoryImpl implements CustomBoardRepository{
 
         return new PageImpl<>(result.getResults(), pageable, result.getTotal());
     }
+
+    @Override
+    public Page<Board> getBoardsWithDynamicTotalCount(BoardRequestDto param, Pageable pageable) {
+        JPAQuery<Board> buildedQuery = query.select(board)
+                .from(board)
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize());
+
+        List<Board> result = buildedQuery.fetch();
+        long count = param.getCachedTotalCount() == null ? buildedQuery.fetchCount() : param.getCachedTotalCount();
+
+        return new PageImpl<>(result, pageable, count);
+    }
 }

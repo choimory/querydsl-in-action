@@ -11,4 +11,5 @@ public interface CustomBoardRepository {
     Page<Board> getBoardsOptionalColumnByTuple(BoardRequestDto param, Pageable pageable);
     Page<Board> getBoardsOptionalColumnByProjectionsFields(BoardRequestDto param, Pageable pageable);
     Page<BoardResponseDto> getBoardsOptionalColumnByProjectionsBean(BoardRequestDto param, Pageable pageable);
+    Page<Board> getBoardsWithDynamicTotalCount(BoardRequestDto param, Pageable pageable);
 }
