@@ -19,8 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.choimory.querydslinaction.board.entity.QBoard.board;
-import static com.choimory.querydslinaction.boardComment.entity.QBoardComment.boardComment;
-import static com.choimory.querydslinaction.user.entity.QUser.user;
 
 @Repository
 @AllArgsConstructor
@@ -37,6 +35,7 @@ public class CustomBoardRepositoryImpl implements CustomBoardRepository{
                         , BoardBooleanExpressions.eqNickname(param.getNickname())
                         , BoardBooleanExpressions.betweenView(param.getViewFrom(), param.getViewTo())
                         , BoardBooleanExpressions.betweenRegistedDateTime(param.getRegistDateTimeFrom(), param.getRegistDateTimeTo()))
+                .orderBy(board.idx.desc())
                 .fetchResults();
 
         return new PageImpl<>(result.getResults(), pageable, result.getTotal());
@@ -50,6 +49,7 @@ public class CustomBoardRepositoryImpl implements CustomBoardRepository{
                 .from(board)
                 .limit(pageable.getPageSize())
                 .offset(pageable.getOffset())
+                .orderBy(board.idx.desc())
                 .fetch();
 
         tuples.forEach(tuple -> {
