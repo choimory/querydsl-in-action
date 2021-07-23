@@ -19,11 +19,10 @@
     - Loop OR
     - Varchar BETWEEN
     - LocalDateTime BETWEEN
-    
-- Projections
 - Tuple
+- Projections
 - JPAQuery<T>
 - QueryResults<T>
-- fetchJoin()
 - JPAExpressions (Subquery)
+- fetchJoin()
 - CASCADE & CUD

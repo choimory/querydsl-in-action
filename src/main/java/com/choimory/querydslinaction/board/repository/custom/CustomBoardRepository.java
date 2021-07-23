@@ -7,4 +7,6 @@ import org.springframework.data.domain.Pageable;
 
 public interface CustomBoardRepository {
     Page<Board> getBoardsDynamically(BoardRequestDto param, Pageable pageable);
+    Page<Board> getBoardsOptionalColumnByTuple(BoardRequestDto param, Pageable pageable);
+    Page<Board> getBoardsOptionalColumnByProjection(BoardRequestDto param, Pageable pageable);
 }
