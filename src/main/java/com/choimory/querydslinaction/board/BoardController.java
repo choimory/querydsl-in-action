@@ -19,39 +19,53 @@ public class BoardController {
     private final BoardService boardService;
 
     @GetMapping
-    public ResponseEntity<CommonResponseData<?>> getBoards(final BoardRequestDto param, Pageable pageable){
+    public ResponseEntity<CommonResponseData<?>> getBoards(final BoardRequestDto param, Pageable pageable) {
         return new ResponseEntity<>(CommonResponseData.builder()
-                                                        .data(boardService.getBoards(param, pageable))
-                                                        .build(), HttpStatus.OK);
+                .data(boardService.getBoards(param, pageable))
+                .build(), HttpStatus.OK);
     }
 
     @GetMapping("/{idx}")
-    public ResponseEntity<CommonResponseData<?>> getBoard(@PathVariable Long idx){
+    public ResponseEntity<CommonResponseData<?>> getBoard(@PathVariable Long idx) {
         return new ResponseEntity<>(CommonResponseData.builder()
-                                                        .data(boardService.getBoard(BoardRequestDto.builder()
-                                                                                                    .idx(idx)
-                                                                                                    .build()))
-                                                        .build(), HttpStatus.OK);
+                .data(boardService.getBoard(BoardRequestDto.builder()
+                        .idx(idx)
+                        .build()))
+                .build(), HttpStatus.OK);
     }
 
     @GetMapping("/tuple")
-    public ResponseEntity<CommonResponseData<?>> getBoardsTuple(final BoardRequestDto param, final Pageable pageable){
+    public ResponseEntity<CommonResponseData<?>> getBoardsTuple(final BoardRequestDto param, final Pageable pageable) {
         return ResponseEntity.ok(CommonResponseData.builder()
                 .data(boardService.getBoardTuple(param, pageable))
                 .build());
     }
 
     @GetMapping("/projections")
-    public ResponseEntity<CommonResponseData<?>> getBoardsProjectionFields(final BoardRequestDto param, final Pageable pageable){
+    public ResponseEntity<CommonResponseData<?>> getBoardsProjectionFields(final BoardRequestDto param, final Pageable pageable) {
         return ResponseEntity.ok(CommonResponseData.builder()
                 .data(boardService.getBoardFields(param, pageable))
                 .build());
     }
 
-    @GetMapping("/dynamicCount")
-    public ResponseEntity<CommonResponseData<?>> getBoardsWithDynamicTotalCount(final BoardRequestDto param, final Pageable pageable){
+    @GetMapping("/dynamic-count")
+    public ResponseEntity<CommonResponseData<?>> getBoardsWithDynamicTotalCount(final BoardRequestDto param, final Pageable pageable) {
         return ResponseEntity.ok(CommonResponseData.builder()
                 .data(boardService.getBoardsWithDynamicTotalCount(param, pageable))
+                .build());
+    }
+
+    @GetMapping("/select-sub-query")
+    public ResponseEntity<CommonResponseData<?>> selectSubQuery(final BoardRequestDto param, final Pageable pageable) {
+        return null;
+    }
+
+    @GetMapping("/where-sub-query/{nickname}")
+    public ResponseEntity<CommonResponseData<?>> whereSubQuery(@PathVariable String nickname, final Pageable pageable) {
+        return ResponseEntity.ok(CommonResponseData.builder()
+                .data(boardService.whereSubQuery(BoardRequestDto.builder()
+                        .nickname(nickname)
+                        .build(), pageable))
                 .build());
     }
 }
