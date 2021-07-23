@@ -53,6 +53,11 @@ public class BoardServiceImpl implements BoardService{
     }
 
     @Override
+    public Page<BoardResponseDto> selectSubQuery(BoardRequestDto param, Pageable pageable) {
+        return boardRepository.selectSubQuery(param, pageable);
+    }
+
+    @Override
     public Page<BoardResponseDto> whereSubQuery(BoardRequestDto param, Pageable pageable) {
         Page<Board> boards = boardRepository.whereSubQuery(param, pageable);
         return new PageImpl<>(boardMapper.toDtos(boards.getContent()), pageable, boards.getTotalElements());

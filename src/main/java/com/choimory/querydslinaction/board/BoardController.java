@@ -55,9 +55,13 @@ public class BoardController {
                 .build());
     }
 
-    @GetMapping("/select-sub-query")
-    public ResponseEntity<CommonResponseData<?>> selectSubQuery(final BoardRequestDto param, final Pageable pageable) {
-        return null;
+    @GetMapping("/select-sub-query/{nickname}")
+    public ResponseEntity<CommonResponseData<?>> selectSubQuery(@PathVariable String nickname, final Pageable pageable) {
+        return ResponseEntity.ok(CommonResponseData.builder()
+                .data(boardService.selectSubQuery(BoardRequestDto.builder()
+                        .nickname(nickname)
+                        .build(), pageable))
+                .build());
     }
 
     @GetMapping("/where-sub-query/{nickname}")

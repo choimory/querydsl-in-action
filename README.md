@@ -24,5 +24,7 @@
 - QueryResults<T>
 - JPAQuery<T>
 - JPAExpressions (Subquery)
+  - JPAExpressions (WHERE SubQuery)
+  - ExpressionUtils + JPAExpressions (SELECT SubQuery)
 - fetchJoin()
 - CASCADE & CUD

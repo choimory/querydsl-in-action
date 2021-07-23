@@ -11,5 +11,6 @@ public interface BoardService {
     Page<BoardResponseDto> getBoardTuple(final BoardRequestDto param, final Pageable pageable);
     Page<BoardResponseDto> getBoardFields(final BoardRequestDto param, final Pageable pageable);
     Page<BoardResponseDto> getBoardsWithDynamicTotalCount(BoardRequestDto param, final Pageable pageable);
+    Page<BoardResponseDto> selectSubQuery(final BoardRequestDto param, final Pageable pageable);
     Page<BoardResponseDto> whereSubQuery(final BoardRequestDto param, final Pageable pageable);
 }

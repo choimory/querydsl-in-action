@@ -7,6 +7,7 @@ import com.choimory.querydslinaction.board.repository.custom.expressions.BoardBo
 import com.choimory.querydslinaction.user.entity.User;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.Tuple;
+import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQuery;
@@ -92,8 +93,17 @@ public class CustomBoardRepositoryImpl implements CustomBoardRepository{
     }
 
     @Override
-    public Page<Board> selectSubQuery(BoardRequestDto param, Pageable pageable) {
-        return null;
+    public Page<BoardResponseDto> selectSubQuery(BoardRequestDto param, Pageable pageable) {
+        QueryResults<BoardResponseDto> result = query.select(Projections.fields(BoardResponseDto.class
+                                                                                , board.title
+                                                                                , ExpressionUtils.as(JPAExpressions.select(user.email)
+                                                                                                                    .from(user)
+                                                                                                                    .where(user.nickname.eq(board.user.nickname)),"subQuery")))
+                                .from(board)
+                                .where(BoardBooleanExpressions.eqNickname(param.getNickname()))
+                                .fetchResults();
+
+        return new PageImpl<>(result.getResults(), pageable, result.getTotal());
     }
 
     @Override
