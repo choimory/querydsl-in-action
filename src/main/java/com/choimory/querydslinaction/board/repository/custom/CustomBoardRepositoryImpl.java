@@ -4,9 +4,12 @@ import com.choimory.querydslinaction.board.dto.request.BoardRequestDto;
 import com.choimory.querydslinaction.board.dto.response.BoardResponseDto;
 import com.choimory.querydslinaction.board.entity.Board;
 import com.choimory.querydslinaction.board.repository.custom.expressions.BoardBooleanExpressions;
+import com.choimory.querydslinaction.user.entity.User;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.Tuple;
+import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.Projections;
+import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.AllArgsConstructor;
@@ -19,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.choimory.querydslinaction.board.entity.QBoard.board;
+import static com.choimory.querydslinaction.user.entity.QUser.user;
 
 @Repository
 @AllArgsConstructor
@@ -65,12 +69,12 @@ public class CustomBoardRepositoryImpl implements CustomBoardRepository{
     @Override
     public Page<Board> getOptionalColumnWithProjectionFields(BoardRequestDto param, Pageable pageable) {
         QueryResults<Board> result = query.select(Projections.fields(Board.class
-                , board.title
-                , board.user))
-                .from(board)
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
-                .fetchResults();
+                                                                    , board.title
+                                                                    , board.user))
+                                        .from(board)
+                                        .offset(pageable.getOffset())
+                                        .limit(pageable.getPageSize())
+                                        .fetchResults();
 
         return new PageImpl<>(result.getResults(), pageable, result.getTotal());
     }
@@ -78,9 +82,9 @@ public class CustomBoardRepositoryImpl implements CustomBoardRepository{
     @Override
     public Page<Board> dynamicTotalCountWithJPAQuery(BoardRequestDto param, Pageable pageable) {
         JPAQuery<Board> buildedQuery = query.select(board)
-                .from(board)
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize());
+                                            .from(board)
+                                            .offset(pageable.getOffset())
+                                            .limit(pageable.getPageSize());
 
         List<Board> result = buildedQuery.fetch();
         long count = param.getCachedTotalCount() == null ? buildedQuery.fetchCount() : param.getCachedTotalCount();
@@ -89,7 +93,30 @@ public class CustomBoardRepositoryImpl implements CustomBoardRepository{
     }
 
     @Override
-    public Page<Board> joinWithTuple(BoardRequestDto param, Pageable pageable) {
-        return null;
+    public Page<BoardResponseDto> selectSubQuery(BoardRequestDto param, Pageable pageable) {
+        QueryResults<BoardResponseDto> result = query.select(Projections.fields(BoardResponseDto.class
+                                                                                , board.title
+                                                                                , ExpressionUtils.as(JPAExpressions.select(user.email)
+                                                                                                                    .from(user)
+                                                                                                                    .where(user.nickname.eq(board.user.nickname)),"subQuery")))
+                                .from(board)
+                                .where(BoardBooleanExpressions.eqNickname(param.getNickname()))
+                                .fetchResults();
+
+        return new PageImpl<>(result.getResults(), pageable, result.getTotal());
+    }
+
+    @Override
+    public Page<Board> whereSubQuery(BoardRequestDto param, Pageable pageable) {
+        QueryResults<Board> results = query.select(Projections.fields(Board.class
+                                                                        , board.title
+                                                                        , board.user))
+                                            .from(board)
+                                            .where(board.user.idx.eq(JPAExpressions.select(user.idx)
+                                                                                    .from(user)
+                                                                                    .where(user.nickname.eq(param.getNickname()))))
+                                            .fetchResults();
+
+        return new PageImpl<>(results.getResults(), pageable, results.getTotal());
     }
 }

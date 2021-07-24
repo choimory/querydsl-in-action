@@ -20,4 +20,6 @@ public class BoardResponseDto {
     private Long upVote;
     private Long downVote;
     private List<BoardCommentResponseDto> boardComments;
+
+    private String subQuery;
 }

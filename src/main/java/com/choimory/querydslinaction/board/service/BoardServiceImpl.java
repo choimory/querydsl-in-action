@@ -45,4 +45,21 @@ public class BoardServiceImpl implements BoardService{
         Page<Board> boards = boardRepository.getOptionalColumnWithProjectionFields(param, pageable);
         return new PageImpl<>(boardMapper.toDtos(boards.getContent()), pageable, boards.getTotalElements());
     }
+
+    @Override
+    public Page<BoardResponseDto> getBoardsWithDynamicTotalCount(BoardRequestDto param, Pageable pageable) {
+        Page<Board> boards = boardRepository.dynamicTotalCountWithJPAQuery(param, pageable);
+        return new PageImpl<>(boardMapper.toDtos(boards.getContent()), pageable, boards.getTotalElements());
+    }
+
+    @Override
+    public Page<BoardResponseDto> selectSubQuery(BoardRequestDto param, Pageable pageable) {
+        return boardRepository.selectSubQuery(param, pageable);
+    }
+
+    @Override
+    public Page<BoardResponseDto> whereSubQuery(BoardRequestDto param, Pageable pageable) {
+        Page<Board> boards = boardRepository.whereSubQuery(param, pageable);
+        return new PageImpl<>(boardMapper.toDtos(boards.getContent()), pageable, boards.getTotalElements());
+    }
 }
