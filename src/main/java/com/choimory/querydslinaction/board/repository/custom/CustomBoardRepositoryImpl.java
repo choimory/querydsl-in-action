@@ -4,11 +4,15 @@ import com.choimory.querydslinaction.board.dto.request.BoardRequestDto;
 import com.choimory.querydslinaction.board.dto.response.BoardResponseDto;
 import com.choimory.querydslinaction.board.entity.Board;
 import com.choimory.querydslinaction.board.repository.custom.expressions.BoardBooleanExpressions;
+import com.choimory.querydslinaction.common.exception.util.CustomException;
+import com.choimory.querydslinaction.common.response.code.CommonResponseCode;
 import com.choimory.querydslinaction.user.entity.User;
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.QueryResults;
 import com.querydsl.core.Tuple;
 import com.querydsl.core.types.ExpressionUtils;
 import com.querydsl.core.types.Projections;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -17,6 +21,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -118,5 +123,30 @@ public class CustomBoardRepositoryImpl implements CustomBoardRepository{
                                             .fetchResults();
 
         return new PageImpl<>(results.getResults(), pageable, results.getTotal());
+    }
+
+    @Override
+    public Page<Board> getBoardsLikeTitleOrLikeContent(BoardRequestDto param, Pageable pageable) {
+        BooleanBuilder builder = new BooleanBuilder();
+        if (param == null){
+          throw new CustomException(CommonResponseCode.BAD_REQUEST.getCode(), CommonResponseCode.BAD_REQUEST.getMessage());
+        } else if(StringUtils.hasText(param.getTitle()) && StringUtils.hasText(param.getContent())){
+            builder.and(BoardBooleanExpressions.startsWithTitle(param.getTitle())).or(BoardBooleanExpressions.containContent(param.getContent()));
+        } else if(StringUtils.hasText(param.getTitle()) && !StringUtils.hasText(param.getContent())){
+            builder.and(BoardBooleanExpressions.startsWithTitle(param.getTitle()));
+        } else if (!StringUtils.hasText(param.getTitle()) && StringUtils.hasText(param.getContent())){
+            builder.and(BoardBooleanExpressions.containContent(param.getContent()));
+        } else {
+            throw new CustomException(CommonResponseCode.BAD_REQUEST.getCode(), CommonResponseCode.BAD_REQUEST.getMessage());
+        }
+
+        QueryResults<Board> qr =  query.select(board)
+                .from(board)
+                .where(builder)
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetchResults();
+
+        return new PageImpl<>(qr.getResults(), pageable, qr.getTotal());
     }
 }
