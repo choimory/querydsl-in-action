@@ -13,4 +13,5 @@ public interface CustomBoardRepository {
     Page<Board> dynamicTotalCountWithJPAQuery(BoardRequestDto param, Pageable pageable);
     Page<BoardResponseDto> selectSubQuery(BoardRequestDto param, Pageable pageable);
     Page<Board> whereSubQuery(BoardRequestDto param, Pageable pageable);
+    Page<Board> getBoardsLikeTitleOrLikeContent(BoardRequestDto param, Pageable pageable);
 }
